@@ -17,6 +17,10 @@ public interface PassengerBuilder {
 
     void setDocumentIssuingCountry(String documentIssuingCountry);
 
+    void setCreditCardNumber(Integer creditCardNumber);
+
+    void setCreditCardNumber(String creditCardNumber);
+
     Passenger build();
 
 }

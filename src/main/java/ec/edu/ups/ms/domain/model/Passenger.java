@@ -11,6 +11,8 @@ public class Passenger {
     private String email;
     private String documentIssuingCountry;
 
+    private Integer creditCardNumber;
+
     public String getFirstName() {
         return firstName;
     }
@@ -59,4 +61,11 @@ public class Passenger {
         this.documentIssuingCountry = documentIssuingCountry;
     }
 
+    public Integer getCreditCardNumber() {
+        return creditCardNumber;
+    }
+
+    public void setCreditCardNumber(Integer creditCardNumber) {
+        this.creditCardNumber = creditCardNumber;
+    }
 }

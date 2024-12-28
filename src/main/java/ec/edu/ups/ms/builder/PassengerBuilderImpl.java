@@ -2,10 +2,14 @@ package ec.edu.ups.ms.builder;
 
 import ec.edu.ups.ms.domain.enums.IdentificationType;
 import ec.edu.ups.ms.domain.model.Passenger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Objects;
 
 public class PassengerBuilderImpl implements PassengerBuilder {
+
+    static final Logger logger = LoggerFactory.getLogger(PassengerBuilderImpl.class);
 
     private final Passenger passenger;
 
@@ -54,8 +58,26 @@ public class PassengerBuilderImpl implements PassengerBuilder {
     }
 
     @Override
+    public void setCreditCardNumber(Integer creditCardNumber) {
+        this.passenger.setCreditCardNumber(creditCardNumber);
+    }
+
+    @Override
+    public void setCreditCardNumber(String creditCardNumber) {
+
+        try {
+            var carNumber = Integer.valueOf(creditCardNumber);
+            this.passenger.setCreditCardNumber(carNumber);
+        } catch (NumberFormatException e) {
+            logger.error("Failed to parse val = {}", creditCardNumber);
+        }
+
+    }
+
+    @Override
     public Passenger build() {
         return this.passenger;
     }
+
 
 }

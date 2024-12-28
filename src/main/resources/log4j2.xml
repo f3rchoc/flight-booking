@@ -4,15 +4,23 @@
                xsi:schemaLocation="https://logging.apache.org/xml/ns
                                    https://logging.apache.org/xml/ns/log4j-config-2.xsd">
 
+    <Properties>
+        <Property name="pattern">%m%n</Property>
+    </Properties>
+
     <appenders>
         <Console name="CONSOLE">
-            <PatternLayout pattern="%d [%t] %5p %c - %m%n"/>
+            <PatternLayout pattern="${pattern}"/>
         </Console>
+        <File name="FILE" fileName="logs/app.log">
+            <PatternLayout pattern="${pattern}"/>
+        </File>
     </appenders>
 
     <loggers>
         <root level="INFO">
             <AppenderRef ref="CONSOLE"/>
+            <AppenderRef ref="FILE"/>
         </root>
     </loggers>
 
