@@ -9,6 +9,11 @@ public class FileException extends RuntimeException {
         this.fileName = fileName;
     }
 
+    public FileException(String message, String fileName) {
+        super(message);
+        this.fileName = fileName;
+    }
+
     public String getFileName() {
         return fileName;
     }

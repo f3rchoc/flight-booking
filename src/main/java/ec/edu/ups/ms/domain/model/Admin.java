@@ -1,9 +1,9 @@
 package ec.edu.ups.ms.domain.model;
 
-public class Admin extends User {
+public class Admin  {
 
     public Admin(String email) {
-        super(email);
+
     }
 
 }

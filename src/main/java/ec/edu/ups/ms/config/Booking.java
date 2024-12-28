@@ -5,10 +5,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.Objects;
 
 public class Booking {
 
@@ -28,12 +29,15 @@ public class Booking {
 
         try {
 
-            ClassLoader classLoader = Booking.class.getClassLoader();
-            String path = Objects.requireNonNull(classLoader.getResource(reservationsFileName)).getPath();
+            URI uri = ClassLoader.getSystemResource(reservationsFileName).toURI();
+            String path = Paths.get(uri).toString();
+
             return Files.readAllLines(Paths.get(path));
 
         } catch (IOException e) {
-            throw new FileException("Error when try to read the reservations file", e, reservationsFileName);
+            throw new FileException("Error when try to read the reservations file", reservationsFileName);
+        } catch (URISyntaxException e) {
+            throw new FileException("Internal error", reservationsFileName);
         }
 
     }

@@ -11,8 +11,6 @@ public class Passenger {
     private String email;
     private String documentIssuingCountry;
 
-    public Passenger() {}
-
     public String getFirstName() {
         return firstName;
     }

@@ -20,14 +20,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        logger.info("Hello, World!");
 
         try {
+
+            logger.info("Application started");
 
             List<Passenger> passengers = new ArrayList<>();
 
             var reservations = BOOKING.readBookings(Constants.RESERVATIONS_FILE_NAME);
             reservations.forEach(reservation -> {
+
                 PassengerBuilder passengerBuilder = new PassengerBuilderImpl();
                 logger.info(reservation);
                 var input = reservation.split("\\|");
@@ -39,11 +41,11 @@ public class Main {
                 passengerBuilder.setEmail(input[6]);
                 var passenger = passengerBuilder.build();
                 logger.info("IdentificationNumber: {}", passenger.getIdentificationNumber());
-
                 passengers.add(passenger);
+
             });
 
-            passengers.toString();
+            logger.info("Application completed");
 
         } catch (Exception e) {
             logger.error(e.getMessage());
