@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        MDC.put("app-name", "flight-booking");
+        MDC.put("app-name", "flight-booking");//Mapped Diagnostic Context (MDC)
 
         Constants.RESERVATIONS_FILE_NAME.forEach(fileName -> {
 
