@@ -4,6 +4,7 @@ import ec.edu.ups.ms.exceptions.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,15 +30,21 @@ public class Booking {
 
         try {
 
-            URI uri = ClassLoader.getSystemResource(reservationsFileName).toURI();
+            var systemResource = ClassLoader.getSystemResource(reservationsFileName);
+
+            if (null == systemResource) {
+                throw new FileNotFoundException("File not found");
+            }
+
+            URI uri = systemResource.toURI();
             String path = Paths.get(uri).toString();
 
             return Files.readAllLines(Paths.get(path));
 
         } catch (IOException e) {
-            throw new FileException("Error when try to read the reservations file", reservationsFileName);
+            throw new FileException("Error when try to read the reservations file", e, reservationsFileName);
         } catch (URISyntaxException e) {
-            throw new FileException("Internal error", reservationsFileName);
+            throw new FileException("URI error", e, reservationsFileName);
         }
 
     }

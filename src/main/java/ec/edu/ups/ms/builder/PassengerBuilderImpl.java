@@ -58,7 +58,7 @@ public class PassengerBuilderImpl implements PassengerBuilder {
     }
 
     @Override
-    public void setCreditCardNumber(Integer creditCardNumber) {
+    public void setCreditCardNumber(Long creditCardNumber) {
         this.passenger.setCreditCardNumber(creditCardNumber);
     }
 
@@ -66,7 +66,7 @@ public class PassengerBuilderImpl implements PassengerBuilder {
     public void setCreditCardNumber(String creditCardNumber) {
 
         try {
-            var carNumber = Integer.valueOf(creditCardNumber);
+            var carNumber = Long.valueOf(creditCardNumber);
             this.passenger.setCreditCardNumber(carNumber);
         } catch (NumberFormatException e) {
             logger.error("Failed to parse val = {}", creditCardNumber);

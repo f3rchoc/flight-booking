@@ -4,12 +4,10 @@ import ec.edu.ups.ms.builder.PassengerBuilder;
 import ec.edu.ups.ms.builder.PassengerBuilderImpl;
 import ec.edu.ups.ms.config.Booking;
 import ec.edu.ups.ms.config.Constants;
-import ec.edu.ups.ms.domain.model.Passenger;
+import ec.edu.ups.ms.exceptions.FileException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.slf4j.MDC;
 
 public class Main {
 
@@ -19,30 +17,40 @@ public class Main {
 
     public static void main(String[] args) {
 
+        MDC.put("app-name", "flight-booking");
 
-        try {
+        Constants.RESERVATIONS_FILE_NAME.forEach(fileName -> {
 
-            logger.info("Application started");
+            MDC.put("file-name", fileName);
 
-            List<Passenger> passengers = new ArrayList<>();
+            try {
 
-            var reservations = BOOKING.readBookings(Constants.RESERVATIONS_FILE_NAME);
-            reservations.forEach(reservation -> {
+                logger.info("Application started");
 
-                PassengerBuilder passengerBuilder = new PassengerBuilderImpl();
-                var input = reservation.split("\\|");
-                passengerBuilder.setCreditCardNumber(input[0]);
-                var passenger = passengerBuilder.build();
+                var reservations = BOOKING.readBookings(fileName);
 
-                passengers.add(passenger);
+                logger.info("There are {} reservations", reservations.size());
 
-            });
+                reservations.forEach(reservation -> {
 
-            logger.info("Application completed");
+                    PassengerBuilder passengerBuilder = new PassengerBuilderImpl();
+                    var input = reservation.split("\\|");
+                    passengerBuilder.setCreditCardNumber(input[0]);
+                    passengerBuilder.build();
 
-        } catch (Exception e) {
-            logger.error("Internal server error");
-        }
+                });
+
+                logger.info("Application finished");
+
+            } catch (FileException e) {
+                logger.error("FileException: File name {}, cause: {}", e.getFileName(), e);
+            } catch (Exception e) {
+                logger.error("General exception", e);
+            }
+
+        });
+
+        MDC.clear();
 
     }
 }

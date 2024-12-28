@@ -5,7 +5,7 @@
                                    https://logging.apache.org/xml/ns/log4j-config-2.xsd">
 
     <Properties>
-        <Property name="pattern">%m%n</Property>
+        <Property name="pattern">%d [%t] %5p | %X{app-name} | %X{file-name} | %c - %m%n</Property>
     </Properties>
 
     <appenders>
