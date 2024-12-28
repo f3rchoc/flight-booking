@@ -30,8 +30,9 @@ public class Main {
             var reservations = BOOKING.readBookings(Constants.RESERVATIONS_FILE_NAME);
             reservations.forEach(reservation -> {
 
+                logger.info("Reservation line: " + reservation);
+
                 PassengerBuilder passengerBuilder = new PassengerBuilderImpl();
-                logger.info(reservation);
                 var input = reservation.split("\\|");
                 passengerBuilder.setIdentificationNumber(input[1]);
                 passengerBuilder.setIdentificationType(IdentificationType.valueOf(input[2]));
@@ -40,7 +41,9 @@ public class Main {
                 passengerBuilder.setLastName(input[5]);
                 passengerBuilder.setEmail(input[6]);
                 var passenger = passengerBuilder.build();
-                logger.info("IdentificationNumber: {}", passenger.getIdentificationNumber());
+
+                logger.info("CreditCardNumber: {}", passenger.getIdentificationNumber());
+
                 passengers.add(passenger);
 
             });
